@@ -63,5 +63,57 @@ uint64_t llrt_fnv1ext(const uint8_t *data, size_t n)
 void llrt_merhash(uint8_t *digest, const uint8_t *data, size_t n)
 {
 	LLRT_WRITE64BE(digest, llrt_fnv1ext(data, n));
-	LLRT_WRITE64BE(digest+8, llrt_fnv1ext(digest, 8));
+	LLRT_WRITE64BE(digest + 8, llrt_fnv1ext(digest, 8));
+}
+
+void llrt_fnv1_stateful(struct fnv1_state *state, const uint8_t *data, size_t n)
+{
+	size_t i;
+	if (!state->hash)
+		state->hash = FNV_OFFSET_BASE;
+
+	for (i = 0; i < n; i++) {
+		state->hash = (state->hash << 8) | ((state->hash & 0xFF) ^ data[i]);
+		state->hash = (uint64_t)(state->hash * FNV_PRIME);
+	}
+
+	state->digest = state->hash;
+}
+
+void llrt_fnv1a_stateful(struct fnv1_state *state, const uint8_t *data, size_t n)
+{
+	size_t i;
+	if (!state->hash)
+		state->hash = FNV_OFFSET_BASE;
+
+	for (i = 0; i < n; i++) {
+		state->hash = (uint64_t)(state->hash * FNV_PRIME);
+		state->hash = (state->hash << 8) | ((state->hash & 0xFF) ^ data[i]);
+	}
+
+	state->digest = state->hash;
+}
+
+void llrt_fnv1ext_stateful(struct fnv1_state *state, const uint8_t *data, size_t n)
+{
+	uint64_t hash_a;
+	uint8_t hash_bytes[8];
+	uint8_t hash_bytes2[8];
+
+	state->hash = llrt_fnv1(data, n);
+	LLRT_WRITE64BE(hash_bytes, state->hash);
+	hash_a = llrt_fnv1a(hash_bytes, 8);
+	LLRT_WRITE64BE(hash_bytes, state->hash);
+	LLRT_WRITE64BE(hash_bytes2, hash_a);
+
+	hash_bytes[0] ^= hash_bytes2[7];
+	hash_bytes[1] ^= hash_bytes2[6];
+	hash_bytes[2] ^= hash_bytes2[5];
+	hash_bytes[3] ^= hash_bytes2[4];
+	hash_bytes[4] ^= hash_bytes2[3];
+	hash_bytes[5] ^= hash_bytes2[2];
+	hash_bytes[6] ^= hash_bytes2[1];
+	hash_bytes[7] ^= hash_bytes2[0];
+
+	state->digest = llrt_fnv1a(hash_bytes, 8);
 }

@@ -22,6 +22,8 @@
 #error Unable to determine arch
 #endif
 
+#define ALIGN(value, alignment) (((value) + (alignment - 1)) & ~(alignment - 1))
+
 #define LLRT_READ16LE(S) ((255 & (S)[1]) << 8 | (255 & (S)[0]))
 #define LLRT_READ16BE(S) ((255 & (S)[0]) << 8 | (255 & (S)[1]))
 #define LLRT_READ32LE(S) \
@@ -80,6 +82,7 @@
  * @return the read value
  */
 extern uint16_t read16le(void *buffer);
+
 /**
  * @brief Reads 2 bytes of the buffer as an uint16_t in big endian
  * order from the buffer.
@@ -87,6 +90,7 @@ extern uint16_t read16le(void *buffer);
  * @return the read value
  */
 extern uint16_t read16be(void *buffer);
+
 /**
  * @brief Reads 4 bytes of the buffer as an uint32_t in little endian
  * order from the buffer.
@@ -94,6 +98,7 @@ extern uint16_t read16be(void *buffer);
  * @return the read value
  */
 extern uint32_t read32le(void *buffer);
+
 /**
  * @brief Reads 4 bytes of the buffer as an uint32_t in big endian
  * order from the buffer.
@@ -101,6 +106,7 @@ extern uint32_t read32le(void *buffer);
  * @return the read value
  */
 extern uint32_t read32be(void *buffer);
+
 /**
  * @brief Reads 8 bytes of the buffer as an uint64_t in little endian
  * order from the buffer.
@@ -108,6 +114,7 @@ extern uint32_t read32be(void *buffer);
  * @return the read value
  */
 extern uint64_t read64le(void *buffer);
+
 /**
  * @brief Reads 8 bytes of the buffer as an uint64_t in big endian
  * order from the buffer.
@@ -122,35 +129,42 @@ extern uint64_t read64be(void *buffer);
  * @param value
  */
 extern void write16le(void *buffer, uint16_t value);
+
 /**
  * @brief Writes value as 2 bytes in big endian order to buffer.
  * @param buffer
  * @param value
  */
 extern void write16be(void *buffer, uint16_t value);
+
 /**
  * @brief Writes value as 4 bytes in little endian order to buffer.
  * @param buffer
  * @param value
  */
 extern void write32le(void *buffer, uint32_t value);
+
 /**
  * @brief Writes value as 4 bytes in big endian order to buffer.
  * @param buffer
  * @param value
  */
 extern void write32be(void *buffer, uint32_t value);
+
 /**
  * @brief Writes value as 8 bytes in little endian order to buffer.
  * @param buffer
  * @param value
  */
 extern void write64le(void *buffer, uint64_t value);
+
 /**
  * @brief Writes value as 8 bytes in big endian order to buffer.
  * @param buffer
  * @param value
  */
 extern void write64be(void *buffer, uint64_t value);
+
+extern size_t align(size_t value, uint8_t alignment);
 
 #endif

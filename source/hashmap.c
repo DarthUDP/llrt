@@ -6,8 +6,8 @@
 */
 
 #include "data_structures/hashmap.h"
-#include "utils/hashes.h"
 #include "sys/memory.h"
+#include "utils/hashes.h"
 
 struct llrt_hashmap_entry {
 	uint8_t key[HASHMAP_KEY_LEN];

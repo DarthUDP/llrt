@@ -17,7 +17,7 @@ struct llrt_queue {
      */
 	size_t rw_off;
 	/**
-     * The llrt_stack size in bytes
+     * The llrt_stack end in bytes
      */
 	size_t queue_size;
 };

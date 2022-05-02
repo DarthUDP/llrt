@@ -3,8 +3,10 @@ project(llrt C)
 
 set(CMAKE_C_STANDARD 90)
 
+set(CMAKE_DISABLE_IN_SOURCE_BUILD ON)
+
 file(GLOB CSources source/*.c)
-file(GLOB CHeaders headers/*.h)
+file(GLOB_RECURSE CHeaders headers/*.h)
 
 add_library(llrt STATIC ${CSources} ${CHeaders})
 

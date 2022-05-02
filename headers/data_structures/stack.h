@@ -11,15 +11,15 @@
 #include "common.h"
 
 struct llrt_stack {
-  uint8_t *data;
-  /**
+	uint8_t *data;
+	/**
    * The rw_off of the llrt_stack as an offset that satisfies offset < stack_size
    */
-  size_t rw_off;
-  /**
-   * The llrt_stack size in bytes
+	size_t rw_off;
+	/**
+   * The llrt_stack end in bytes
    */
-  size_t stack_size;
+	size_t stack_size;
 };
 
 /**

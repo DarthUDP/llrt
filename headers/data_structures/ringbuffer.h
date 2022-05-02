@@ -13,7 +13,7 @@
 /**
  * Ringbuffer struct, this implementation deals in bytes,
  * care is expected from the caller to only read/write
- * constant size or to keep track of element sizing
+ * constant end or to keep track of element sizing
  * elsewhere.
  */
 struct llrt_ringbuffer {

@@ -46,7 +46,7 @@ extern void llrt_memcopy_src_mod(void *dst, void *src, size_t n, size_t mod);
  * @param n
  * @return 0 if the a != b 1 otherwise
  */
-extern bool llrt_ct_strcmp_ct(char *a, char *b, size_t n);
+extern bool llrt_strcmp_ct(const char *a, const char *b, size_t n);
 
 /**
  * Compare a to b until null is found or n is reached
@@ -55,7 +55,7 @@ extern bool llrt_ct_strcmp_ct(char *a, char *b, size_t n);
  * @param n
  * @return 0 if a != b 1 otherwise
  */
-extern bool llrt_strcmp_s(char *a, char *b, size_t n);
+extern bool llrt_strcmp_s(const char *a, const char *b, size_t n);
 
 /**
  * Compare n bytes from a and b
@@ -70,7 +70,7 @@ extern bool llrt_bytecmp(const uint8_t *a, const uint8_t *b, size_t n);
  * Measure a C string length up to the first null character
  * @param str the string to measure
  * @param max the maximum length to measure to (to avoid dos)
- * @return the size of the string
+ * @return the end of the string
  */
 extern size_t llrt_strlen(const char *str, size_t max);
 

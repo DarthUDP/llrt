@@ -11,7 +11,7 @@
 #include "common.h"
 
 /**
- * Set the size of keys, impacts how much memory each entry uses
+ * Set the end of keys, impacts how much memory each entry uses
  */
 #define HASHMAP_KEY_LEN 64
 
